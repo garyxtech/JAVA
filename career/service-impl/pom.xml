@@ -19,6 +19,11 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+    	<groupId>com.garykristy.career</groupId>
+    	<artifactId>service</artifactId>
+    	<version>1.0-SNAPSHOT</version>
+    </dependency>
   </dependencies>
   <parent>
   	<groupId>com.garykristy.career</groupId>
