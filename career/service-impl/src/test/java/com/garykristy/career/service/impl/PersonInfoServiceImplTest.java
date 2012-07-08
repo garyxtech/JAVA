@@ -1,15 +1,14 @@
 package com.garykristy.career.service.impl;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.*;
+
+import org.junit.Test;
 
 import com.garykristy.career.domain.Person;
 
-public class PersonInfoServiceImplTest extends TestCase {
+public class PersonInfoServiceImplTest {
 
-	public PersonInfoServiceImplTest(String testName) {
-		super(testName);
-	}
-
+	@Test
 	public void testFindPerson() {
 		PersonInfoServiceImpl impl = new PersonInfoServiceImpl();
 		Person personFound = impl.findPersonById("gary");
