@@ -8,6 +8,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.dbunit.DatabaseUnitException;
 import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
@@ -31,6 +34,7 @@ public class PersonDaoImplTest {
 	private static PersonDaoImpl dao = new PersonDaoImpl();
 	private static Connection connection;
 	private static HsqldbConnection dbunitConnection;
+	private static SqlSessionFactory factory;
 
 	@BeforeClass
 	public static void setupDatabase() throws Exception {
@@ -38,8 +42,11 @@ public class PersonDaoImplTest {
 		connection = DriverManager
 				.getConnection("jdbc:hsqldb:mem:dao-impl-test;shutdown=true");
 		dbunitConnection = new HsqldbConnection(connection, null);
-		dao.setDbConn(connection);
 		createTable();
+
+		factory = new SqlSessionFactoryBuilder().build(Resources
+				.getResourceAsStream("mybatis.conf.xml"));
+		dao.setConnection(factory.openSession());
 	}
 
 	@AfterClass
@@ -60,7 +67,10 @@ public class PersonDaoImplTest {
 		IDataSet setupDataSet = getDataSet("/users.xml");
 		DatabaseOperation.CLEAN_INSERT.execute(dbunitConnection, setupDataSet);
 
-		List<Person> persons = dao.queryPersons(new PersonSearchPara());
+		PersonSearchPara para = new PersonSearchPara();
+		para.setMain(new Person());
+		para.getMain().setId("1");
+		List<Person> persons = dao.queryPersons(para);
 		assertNotNull(persons);
 		assertEquals("只应该找到一个Person，", 1, persons.size());
 		Person gary = persons.get(0);

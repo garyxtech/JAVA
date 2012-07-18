@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.people.dao.impl.mapper.PersonMapper">
+	<select id="queryPersons" parameterType="com.people.dao.PersonSearchPara"
+		resultType="com.people.domain.Person">
+		select * from Person where id = #{main.id}
+	</select>
+</mapper>

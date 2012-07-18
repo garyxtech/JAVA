@@ -14,13 +14,13 @@
 
   <dependencies>
     <dependency>
-    	<groupId>com.garykristy.career</groupId>
+    	<groupId>com.people</groupId>
     	<artifactId>domain</artifactId>
     	<version>1.0-SNAPSHOT</version>
     </dependency>
   </dependencies>
   <parent>
-  	<groupId>com.garykristy.career</groupId>
+  	<groupId>com.people</groupId>
   	<artifactId>all</artifactId>
   	<version>1.0-SNAPSHOT</version>
   </parent>

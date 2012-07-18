@@ -13,5 +13,5 @@ public class PersonSearchPara {
 	public void setMain(Person main) {
 		this.main = main;
 	}
-	
+
 }
