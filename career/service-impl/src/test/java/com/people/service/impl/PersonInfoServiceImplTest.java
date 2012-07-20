@@ -1,75 +1,46 @@
 package com.people.service.impl;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.ArgumentMatcher;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.people.dao.PersonDao;
-import com.people.dao.PersonSearchPara;
 import com.people.domain.Person;
+import com.people.service.PersonInfoService;
 
 public class PersonInfoServiceImplTest {
 
-	private PersonInfoServiceImpl pis;
+	private ApplicationContext springContext;
+
+	private PersonInfoService pis;
 
 	@Before
 	public void setupPersonInfoServiceImpl() throws SQLException {
 
-		pis = new PersonInfoServiceImpl();
+		springContext = new ClassPathXmlApplicationContext(
+				"classpath:spring.xml");
 
-		PersonDao pDao = mock(PersonDao.class);
-		when(pDao.queryPersons(argThat(new ArgumentMatcher<PersonSearchPara>() {
-			@Override
-			public boolean matches(Object argument) {
-				PersonSearchPara arg = (PersonSearchPara) argument;
-				return null != arg && "gary".equals(arg.getMain().getId());
-			}
-		}))).thenReturn(getPersonGary());
-		when(pDao.queryPersons(argThat(new ArgumentMatcher<PersonSearchPara>() {
-			@Override
-			public boolean matches(Object argument) {
-				PersonSearchPara arg = (PersonSearchPara) argument;
-				return null != arg && "kristy".equals(arg.getMain().getId());
-			}
-		}))).thenReturn(getPersonKristy());
+		pis = springContext.getBean(PersonInfoService.class);
 
-		pis.setPersonDao(pDao);
-	}
-
-	private List<Person> getPersonGary() {
-		Person p = new Person();
-		p.setId("gary");
-		p.setFirstName("gary");
-		p.setLastName("xue");
-		List<Person> ret = new ArrayList<Person>();
-		ret.add(p);
-		return ret;
-	}
-
-	private List<Person> getPersonKristy() {
-		Person p = new Person();
-		p.setId("kristy");
-		p.setFirstName("kristy");
-		p.setLastName("liu");
-		List<Person> ret = new ArrayList<Person>();
-		ret.add(p);
-		return ret;
 	}
 
 	@Test
 	public void testFindPerson() throws SQLException {
-		Person personFound = pis.findPersonById("gary");
+		Person personFound = pis.findPersonById("1");
 		assertNotNull("必须找到对应person", personFound);
 		assertEquals("名字要匹配", "gary", personFound.getFirstName());
 		assertEquals("姓要匹配", "xue", personFound.getLastName());
+	}
 
+	@Test
+	public void testFindPersonNullID() throws SQLException {
+		Person p = pis.findPersonById(null);
+		assertNull("null参数返回必须为null对象", p);
 	}
 }
