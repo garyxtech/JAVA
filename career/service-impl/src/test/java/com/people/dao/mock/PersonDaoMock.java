@@ -4,13 +4,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Component;
-
 import com.people.dao.PersonDao;
 import com.people.dao.PersonSearchPara;
 import com.people.domain.Person;
 
-@Component
 public class PersonDaoMock implements PersonDao {
 
 	public List<Person> queryPersons(PersonSearchPara para) throws SQLException {

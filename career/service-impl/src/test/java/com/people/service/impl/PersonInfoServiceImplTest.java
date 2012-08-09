@@ -20,7 +20,6 @@ public class PersonInfoServiceImplTest {
 
 	private PersonInfoService pis;
 
-	@Before
 	public void setupPersonInfoServiceImpl() throws SQLException {
 
 		springContext = new ClassPathXmlApplicationContext(
@@ -30,7 +29,6 @@ public class PersonInfoServiceImplTest {
 
 	}
 
-	@Test
 	public void testFindPerson() throws SQLException {
 		Person personFound = pis.findPersonById("1");
 		assertNotNull("必须找到对应person", personFound);
@@ -38,7 +36,6 @@ public class PersonInfoServiceImplTest {
 		assertEquals("姓要匹配", "xue", personFound.getLastName());
 	}
 
-	@Test
 	public void testFindPersonNullID() throws SQLException {
 		Person p = pis.findPersonById(null);
 		assertNull("null参数返回必须为null对象", p);

@@ -1,5 +1,8 @@
 package com.people.dao.impl;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -17,13 +20,8 @@ import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.ext.hsqldb.HsqldbConnection;
 import org.dbunit.operation.DatabaseOperation;
-import static org.junit.Assert.*;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
 
 import com.people.dao.PersonSearchPara;
-import com.people.dao.impl.PersonDaoImpl;
 import com.people.domain.Person;
 
 /**
@@ -31,12 +29,11 @@ import com.people.domain.Person;
  */
 public class PersonDaoImplTest {
 
-	private static PersonDaoImpl dao = new PersonDaoImpl();
+	private static PersonDaoImpl dao = new PersonDaoImpl(null);
 	private static Connection connection;
 	private static HsqldbConnection dbunitConnection;
 	private static SqlSessionFactory factory;
 
-	@BeforeClass
 	public static void setupDatabase() throws Exception {
 		Class.forName("org.hsqldb.jdbcDriver");
 		connection = DriverManager
@@ -49,7 +46,6 @@ public class PersonDaoImplTest {
 		dao.setConnection(factory.openSession());
 	}
 
-	@AfterClass
 	public static void closeDatabase() throws SQLException {
 		if (connection != null) {
 			connection.close();
@@ -61,7 +57,6 @@ public class PersonDaoImplTest {
 		}
 	}
 
-	@Test
 	public void testQueryUsers() throws SQLException, DatabaseUnitException,
 			IOException {
 		IDataSet setupDataSet = getDataSet("/users.xml");

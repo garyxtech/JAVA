@@ -11,14 +11,12 @@ import com.people.domain.Person;
  */
 public class PersonTest {
 
-	@Test
 	public void testFirstName() {
 		Person p = new Person();
 		p.setFirstName("gary");
 		assertEquals("gary", p.getFirstName());
 	}
 
-	@Test
 	public void testLastName() {
 		Person p = new Person();
 		p.setLastName("xue");
