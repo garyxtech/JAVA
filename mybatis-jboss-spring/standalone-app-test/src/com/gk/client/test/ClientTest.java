@@ -35,54 +35,34 @@ public class ClientTest {
 
 		printAllUsers(userService);
 
-		// ==========================================================
-
-		System.out.println("====== To insert admin and f1 and f2 ======");
+		// ====== test for transaction
 		try {
-			userService.insertAdminAndF1F2();
+			userService.testTransaction();
 		} catch (Exception e) {
-			System.out.println("ERROR:" + e.getMessage());
+			System.out.println("Catch Ex: " + e.getMessage());
 		}
-
 		printAllUsers(userService);
 
-		// ==========================================================
-
-		System.out.println("====== To insert admin again =========");
-
-		try {
-			userService.insertAdmin();
-		} catch (Exception e) {
-			System.out.println("ERROR:" + e.getMessage());
-		}
-
-		printAllUsers(userService);
-
-		// ==========================================================
-
-		System.out
-				.println("====== To insert admin and f1 and f2 AGAIN =========");
-
-		try {
-			userService.insertAdminAndF1F2();
-		} catch (Exception e) {
-			System.out.println("ERROR:" + e.getMessage());
-		}
-
-		printAllUsers(userService);
-
-		// ==========================================================
-
-		System.out
-				.println("====== Just insert f1 and f2 AGAIN =========");
-
-		try {
-			userService.insertF1F2();
-		} catch (Exception e) {
-			System.out.println("ERROR:" + e.getMessage());
-		}
-
-		printAllUsers(userService);
+		/*
+		 * 
+		 * // ==========================================================
+		 * 
+		 * System.out.println("====== To insert admin and f1 and f2 ======");
+		 * try { userService.insertF1F2AndThenADMIN(); } catch (Exception e) {
+		 * System.out.println("ERROR:" + e.getMessage()); }
+		 * 
+		 * printAllUsers(userService);
+		 * 
+		 * // ==========================================================
+		 * 
+		 * System.out
+		 * .println("====== To insert admin and f1 and f2 AGAIN =========");
+		 * 
+		 * try { userService.insertF1F2AndThenADMIN(); } catch (Exception e) {
+		 * System.out.println("ERROR:" + e.getMessage()); }
+		 * 
+		 * printAllUsers(userService);
+		 */
 
 	}
 

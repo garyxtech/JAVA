@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.gk.dao.api.UserDao;
 import com.gk.pojo.User;
 import com.gk.service.api.UserService;
+import com.gk.service.impl.binding.spring.annotation.StrictTransactional;
 
 public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
@@ -25,12 +26,13 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	}
 
 	@Override
+	@StrictTransactional
 	public void insertUser(User user) throws Exception {
 		userDao().insertUser(user);
 	}
 
 	@Override
-	@Transactional
+	@StrictTransactional
 	public void insertAdmin() throws Exception {
 		User admin = new User();
 		admin.setFirstName("ADMIN");
@@ -39,7 +41,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	}
 
 	@Override
-	@Transactional
+	@StrictTransactional
 	public void insertF1F2() throws Exception {
 
 		User user = new User();
@@ -53,13 +55,40 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	}
 
 	@Override
-	@Transactional
-	public void insertAdminAndF1F2() throws Exception {
+	@StrictTransactional
+	public void insertF1F2AndThenADMIN() throws Exception {
 
 		insertF1F2();
 
 		insertAdmin();
 
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void testTransaction() throws Exception {
+		User user = new User();
+		user.setFirstName("F1");
+		user.setLastName("L1");
+		userDao().insertUser(user);
+
+		user.setFirstName("F2");
+		user.setLastName("L2");
+		userDao().insertUser(user);
+
+		long time = System.currentTimeMillis();
+		System.out.println("time is " + time);
+		if (time % 2 >= 0) {
+			;//throw new Exception("Rollback this time");
+		}
+
+		user.setFirstName("F3");
+		user.setLastName("L3");
+		userDao().insertUser(user);
+
+		user.setFirstName("F4");
+		user.setLastName("L4");
+		userDao().insertUser(user);
 	}
 
 }

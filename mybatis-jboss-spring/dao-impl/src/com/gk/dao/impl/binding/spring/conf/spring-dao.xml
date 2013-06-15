@@ -17,6 +17,7 @@
 		<property name="url" value="jdbc:hsqldb:mem:gk;sql.syntax_ora=true" />
 		<property name="username" value="sa" />
 		<property name="password" value="" />
+		<property name="defaultAutoCommit" value="false" />
 	</bean>
 
 	<bean id="transactionManager"
