@@ -21,15 +21,14 @@ public class SpringServiceCenterImpl implements ServiceCenter {
 	}
 
 	@Override
-	public void setInitData(Object data) {
-		springContext = (ApplicationContext) data;
+	public void setInitData(Object data, DaoCenter daoCenter) {
+		this.springContext = (ApplicationContext) data;
+		this.daoCenter = daoCenter;
 	}
 
 	@Override
 	public void init() {
-		daoCenter = (DaoCenter) springContext.getBean("daoCenter");
-		daoCenter.setInitData(springContext);
-		daoCenter.init();
+		//do some other init settings
 	}
 
 }

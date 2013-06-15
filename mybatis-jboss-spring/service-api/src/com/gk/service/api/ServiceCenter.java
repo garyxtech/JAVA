@@ -1,8 +1,10 @@
 package com.gk.service.api;
 
+import com.gk.dao.api.DaoCenter;
+
 public interface ServiceCenter {
 
-	public void setInitData(Object data);
+	public void setInitData(Object data, DaoCenter daoCenter);
 
 	public void init();
 
