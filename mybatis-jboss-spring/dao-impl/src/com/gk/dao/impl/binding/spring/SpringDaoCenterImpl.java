@@ -1,4 +1,4 @@
-package com.gk.dao.impl;
+package com.gk.dao.impl.binding.spring;
 
 import org.springframework.context.ApplicationContext;
 

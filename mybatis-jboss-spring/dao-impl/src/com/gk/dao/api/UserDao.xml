@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gk.dao.api.UserDao">
+
+	<select id="queryUserById" parameterType="int" resultType="com.gk.pojo.User">
+		select 'Gary' as firstName, 'Xue' as lastName from dual
+	</select>
+
+	<select id="fetchAllUsers" resultType="com.gk.pojo.User">
+		select * from TBL_USR
+	</select>
+
+	<insert id="insertUser" parameterType="com.gk.pojo.User">
+		insert into TBL_USR
+		(firstName, lastName) values (#{firstName},
+		#{lastName})
+	</insert>
+
+	<update id="createTable">
+		create table TBL_USR(
+		firstName varchar2(200),
+		lastName varchar2(200)
+		)
+	</update>
+</mapper>

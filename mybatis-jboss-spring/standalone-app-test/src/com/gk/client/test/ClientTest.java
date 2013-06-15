@@ -14,8 +14,9 @@ public class ClientTest {
 	public static void main(String[] args) throws Throwable {
 
 		ClassPathXmlApplicationContext springContext = new ClassPathXmlApplicationContext(
-				new String[] { "/com/gk/service/impl/conf/spring-service.xml",
-						"com/gk/dao/impl/conf/spring-dao.xml" });
+				new String[] {
+						"/com/gk/service/impl/binding/spring/conf/spring-service.xml",
+						"com/gk/dao/impl/binding/spring/conf/spring-dao.xml" });
 
 		DaoCenter dc = getDaoCenter();
 		dc.setInitData(springContext);
@@ -27,17 +28,72 @@ public class ClientTest {
 
 		UserService userService = sc.getService(UserService.class);
 
-		User defaultUser = userService.getUserById(0);
+		// ==========================================================
 
-		System.out.println("Default user is: " + defaultUser.getFirstName()
-				+ " " + defaultUser.getLastName());
+		System.out.println("========== create table");
+		userService.createUserTable();
 
-		springContext.close();
+		printAllUsers(userService);
+
+		// ==========================================================
+
+		System.out.println("====== To insert admin and f1 and f2 ======");
+		try {
+			userService.insertAdminAndF1F2();
+		} catch (Exception e) {
+			System.out.println("ERROR:" + e.getMessage());
+		}
+
+		printAllUsers(userService);
+
+		// ==========================================================
+
+		System.out.println("====== To insert admin again =========");
+
+		try {
+			userService.insertAdmin();
+		} catch (Exception e) {
+			System.out.println("ERROR:" + e.getMessage());
+		}
+
+		printAllUsers(userService);
+
+		// ==========================================================
+
+		System.out
+				.println("====== To insert admin and f1 and f2 AGAIN =========");
+
+		try {
+			userService.insertAdminAndF1F2();
+		} catch (Exception e) {
+			System.out.println("ERROR:" + e.getMessage());
+		}
+
+		printAllUsers(userService);
+
+		// ==========================================================
+
+		System.out
+				.println("====== Just insert f1 and f2 AGAIN =========");
+
+		try {
+			userService.insertF1F2();
+		} catch (Exception e) {
+			System.out.println("ERROR:" + e.getMessage());
+		}
+
+		printAllUsers(userService);
+
 	}
 
 	private static ServiceCenter getServiceCenter(DaoCenter dc)
-			throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException, ClassNotFoundException {
-		return (ServiceCenter) Class.forName("com.gk.service.impl.SpringServiceCenterImpl")
+			throws IllegalArgumentException, SecurityException,
+			InstantiationException, IllegalAccessException,
+			InvocationTargetException, NoSuchMethodException,
+			ClassNotFoundException {
+		return (ServiceCenter) Class
+				.forName(
+						"com.gk.service.impl.binding.spring.SpringServiceCenterImpl")
 				.getConstructor().newInstance();
 	}
 
@@ -45,8 +101,16 @@ public class ClientTest {
 			SecurityException, InstantiationException, IllegalAccessException,
 			InvocationTargetException, NoSuchMethodException,
 			ClassNotFoundException {
-		return (DaoCenter) Class.forName("com.gk.dao.impl.SpringDaoCenterImpl")
+		return (DaoCenter) Class
+				.forName("com.gk.dao.impl.binding.spring.SpringDaoCenterImpl")
 				.getConstructor().newInstance();
+	}
+
+	private static void printAllUsers(UserService service) {
+		System.out.println("-- all users --");
+		for (User u : service.fetchAllUsers()) {
+			System.out.println(u.getFirstName() + " " + u.getLastName());
+		}
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.gk.service.impl;
+package com.gk.service.impl.binding.spring;
 
 import org.springframework.context.ApplicationContext;
 
