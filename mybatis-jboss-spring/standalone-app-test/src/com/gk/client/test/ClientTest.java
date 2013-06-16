@@ -42,28 +42,16 @@ public class ClientTest {
 			System.out.println("Catch Ex: " + e.getMessage());
 		}
 		printAllUsers(userService);
+		
+		// =======================
+		userService.insertF1F2();
+		printAllUsers(userService);
 
-		/*
-		 * 
-		 * // ==========================================================
-		 * 
-		 * System.out.println("====== To insert admin and f1 and f2 ======");
-		 * try { userService.insertF1F2AndThenADMIN(); } catch (Exception e) {
-		 * System.out.println("ERROR:" + e.getMessage()); }
-		 * 
-		 * printAllUsers(userService);
-		 * 
-		 * // ==========================================================
-		 * 
-		 * System.out
-		 * .println("====== To insert admin and f1 and f2 AGAIN =========");
-		 * 
-		 * try { userService.insertF1F2AndThenADMIN(); } catch (Exception e) {
-		 * System.out.println("ERROR:" + e.getMessage()); }
-		 * 
-		 * printAllUsers(userService);
-		 */
-
+		// ======== test for pure jdbc sql ==========
+		userService.testPureJdbcSql();
+		printAllUsers(userService);
+		
+		
 	}
 
 	private static ServiceCenter getServiceCenter(DaoCenter dc)

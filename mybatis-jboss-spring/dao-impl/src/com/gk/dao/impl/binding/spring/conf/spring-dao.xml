@@ -41,6 +41,7 @@
 	</bean>
 
 	<bean id="com.gk.dao.api.UserDao" class="com.gk.dao.impl.UserDaoImpl">
+		<property name="sessionFactory" ref="sqlSessionFactory" />
 		<property name="sqlSession" ref="sqlSession" />
 	</bean>
 

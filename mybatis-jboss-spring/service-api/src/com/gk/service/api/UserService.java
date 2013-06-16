@@ -19,5 +19,7 @@ public interface UserService extends BaseService {
 	public void insertF1F2() throws Exception;
 
 	public void testTransaction() throws Exception;
+	
+	public void testPureJdbcSql() throws Exception;
 
 }

@@ -1,5 +1,7 @@
 package com.gk.dao.impl;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 import com.gk.dao.api.UserDao;
@@ -39,6 +41,23 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 	public List<User> fetchAllUsers() {
 		return getSqlSession().selectList(
 				UserDao.class.getName() + ".fetchAllUsers");
+	}
+
+	@Override
+	public void insertDummyUserWithPureJdbcSql() throws SQLException {
+		Connection conn = getSessionFactory().openSession().getConnection();
+
+		try {
+			conn.createStatement().execute(
+					"insert into TBL_USR (firstName, lastName) "
+							+ "values ('DMY_FN', 'DMY_LN')");
+			conn.commit();
+		} catch (SQLException ex) {
+			conn.rollback();
+			throw ex;
+		} finally {
+			conn.close();
+		}
 	}
 
 }
